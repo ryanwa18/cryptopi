@@ -14,12 +14,6 @@ from adafruit_epd.ssd1675b import Adafruit_SSD1675B  # pylint: disable=unused-im
 
 from get_price import get_price
 
-# create two buttons
-switch1 = DigitalInOut(board.D6)
-switch2 = DigitalInOut(board.D5)
-switch1.direction = Direction.INPUT
-switch2.direction = Direction.INPUT
-
 # create the spi device and pins we will need
 spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
 ecs = DigitalInOut(board.D8)
@@ -81,17 +75,5 @@ draw.text((10, 35), "$" + str(btc_price), font=font, fill=BLACK)
 draw.text((10, 60), "ETH", font=font, fill=BLACK)
 draw.text((10, 85), "$" + str(eth_price), font=font, fill=BLACK)
 
-while True:
-    if not switch1.value:
-        print("Switch 1")
-        display.image(image)
-        display.display()
-        while not switch1.value:
-            time.sleep(0.01)
-    if not switch2.value:
-        print("Switch 2")
-        display.fill(Adafruit_EPD.WHITE)
-        display.display()
-        while not switch2.value:
-            time.sleep(0.01)
-    time.sleep(0.01)
+display.image(image)
+display.display()
